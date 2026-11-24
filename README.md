@@ -93,6 +93,24 @@ Al retornar objetos nativos y no texto plano, permite encadenar comandos fácilm
 
 ---
 
+
+## ⚙️ Instalación en el PATH de la sesión de usuario
+
+Para poder ejecutar `Find-ADAsset.ps1` desde cualquier directorio de la consola sin especificar la ruta completa:
+
+```powershell
+$scriptDirectory = 'C:\Path\2\Tool'
+$currentUserPath = [System.Environment]::GetEnvironmentVariable('Path', 'User')
+
+if (($currentUserPath -split ';') -notcontains $scriptDirectory) {
+    $newUserPath = $currentUserPath.TrimEnd(';') + ';' + $scriptDirectory
+    [System.Environment]::SetEnvironmentVariable('Path', $newUserPath, 'User')
+}
+```
+> *Nota: Reabre la consola de PowerShell tras ejecutar este bloque para refrescar las variables de entorno.*
+
+---
+
 ## 🗺️ Roadmap
 
 - [x] Resolución vía DNS + Fallback AD por IP.
